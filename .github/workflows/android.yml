@@ -15,6 +15,7 @@ jobs:
 
       - name: Unzip project files
         run: |
+          shopt -s dotglob
           ZIP_FILE=$(find . -maxdepth 1 -name "*.zip" | head -n 1)
           if [ -n "$ZIP_FILE" ]; then
             echo "ZIP bulundu: $ZIP_FILE, çıkartılıyor..."
@@ -29,6 +30,8 @@ jobs:
             fi
             rm -rf extracted
           fi
+          # Secrets eklentisinin çökmemesi için boş .env ve .env.example oluşturuyoruz
+          touch .env .env.example
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
